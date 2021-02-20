@@ -1,4 +1,5 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 contract addCitizen{
     struct Citizen{
@@ -19,14 +20,14 @@ contract addCitizen{
 
     modifier isAdmin(){
         require(msg.sender == owner);
+        _;
     }
 
     event citizenAdded(Citizen citizen);
 
-    function addC(string _name, uint _phone, uint _adhar, address _id) isAdmin public returns(string){
+    function addC(string memory _name, uint _phone, uint _adhar, address _id) isAdmin public {
         citizens[_id] = Citizen(_name, _phone, _adhar, _id);
         totalCitizens ++;
-        emit citizenAdded(citizen[id]);
-        return "Citizen Added";
+        emit citizenAdded(citizens[_id]);
     }
 }
